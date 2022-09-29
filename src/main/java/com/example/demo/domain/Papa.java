@@ -4,6 +4,7 @@ package com.example.demo.domain;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "papa")
 public class Papa {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -12,6 +13,10 @@ public class Papa {
     private String nombre;
 
     private Integer edad;
+
+    @ManyToOne
+    @JoinColumn(name = "cajon_id")
+    private Cajon cajon;
 
     public Integer getId() {
         return id;
