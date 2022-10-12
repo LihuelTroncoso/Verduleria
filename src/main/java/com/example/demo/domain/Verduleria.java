@@ -19,6 +19,10 @@ public class Verduleria {
         this.empleados = empleados;
     }
 
+    public Verduleria(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Verduleria() {
     }
 

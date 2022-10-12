@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class Cajon {
 
     private String ubicacion;
     @OneToMany(mappedBy = "cajon")
+    @JsonManagedReference
     private List<Papa> papas;
 
     public Cajon(Long idCajon, String ubicacion, List<Papa> papas) {
@@ -20,9 +23,17 @@ public class Cajon {
         this.papas = papas;
     }
 
+    public Cajon(String ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
     public Cajon() {
     }
 
+    public Cajon(long i, String testing) {
+        this.idCajon = i;
+        this.ubicacion = testing;
+    }
 
 
     public Long getIdCajon() {

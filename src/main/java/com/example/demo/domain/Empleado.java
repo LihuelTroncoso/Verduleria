@@ -23,6 +23,11 @@ public class Empleado {
         this.verdulerias = verdulerias;
     }
 
+    public Empleado(String nombre, Integer edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+
     public Empleado() {
     }
 

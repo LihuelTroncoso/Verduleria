@@ -1,9 +1,10 @@
 package com.example.demo.controllers;
 
 import com.example.demo.domain.Empleado;
-import com.example.demo.domain.Papa;
 import com.example.demo.repository.EmpleadoRepository;
+import com.example.demo.service.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.Optional;
 public class EmpleadoController {
     @Autowired
     EmpleadoRepository empleadosRepo;
+    @Autowired
+    EmpleadoService service;
 
     @GetMapping
     public List<Empleado> getEmpleados() {
@@ -21,26 +24,20 @@ public class EmpleadoController {
     }
 
     @PostMapping
-    public void insertExhibition(@RequestBody Empleado empleado){
-        empleadosRepo.save(empleado);
+    public Empleado insertEmpleado(@RequestBody Empleado empleado) {
+        return empleadosRepo.save(empleado);
     }
 
     @GetMapping("/{id}")
-    public Optional<Empleado> getEmpleadoById(@RequestBody Long id) {
-        return empleadosRepo.findById(id);
+    public ResponseEntity<Empleado> getEmpleadoById(@PathVariable Long id) {
+        return empleadosRepo.findById(id).map(ResponseEntity.ok()::body)
+                .orElseGet(ResponseEntity.notFound()::build);
     }
 
     @PutMapping("/{id}")
     public Empleado updateEmpleado(@RequestBody Empleado newEmpleado, @PathVariable Long id) {
-        return empleadosRepo.findById(id).map(empleado -> {
-            empleado.setId(newEmpleado.getId());
-            empleado.setEdad(newEmpleado.getEdad());
-            empleado.setVerdulerias(newEmpleado.getVerdulerias());
-            empleado.setNombre(newEmpleado.getNombre());
-            return empleadosRepo.save(empleado);
-        }).orElseGet(() -> {
-            return empleadosRepo.save(newEmpleado);
-        });
+        return service.updateEmpleado(id, newEmpleado);
+        //Se puede pasar a service esta funcion
     }
 
     @DeleteMapping("/{id}")

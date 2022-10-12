@@ -1,14 +1,15 @@
 package com.example.demo.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "papa")
 public class Papa {
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Integer id;
+    private Long id;
 
     private String nombre;
 
@@ -16,13 +17,30 @@ public class Papa {
 
     @ManyToOne
     @JoinColumn(name = "cajon_id")
+    @JsonBackReference
     private Cajon cajon;
 
-    public Integer getId() {
+    public Papa(Long id, String nombre, Integer edad, Cajon cajon) {
+        this.id = id;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.cajon = cajon;
+    }
+
+    public Papa() {
+    }
+
+    public Papa(String nombre, Integer edad, Cajon cajon) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.cajon = cajon;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -40,6 +58,14 @@ public class Papa {
 
     public void setEdad(Integer edad) {
         this.edad = edad;
+    }
+
+    public Cajon getCajon() {
+        return cajon;
+    }
+
+    public void setCajon(Cajon cajon) {
+        this.cajon = cajon;
     }
 
     @Override

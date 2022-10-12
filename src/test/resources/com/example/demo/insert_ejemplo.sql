@@ -1,0 +1,1 @@
+INSERT INTO cajon VALUES (2001, 'testing');
