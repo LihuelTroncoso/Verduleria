@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public class Empleado {
     private String nombre;
     private Integer edad;
     @ManyToMany
+    @JsonBackReference
     @JoinTable(name = "rel__verduleria_empleado",
             joinColumns = @JoinColumn(name = "verduleria_id"),
             inverseJoinColumns = @JoinColumn(name = "empleado_id"))

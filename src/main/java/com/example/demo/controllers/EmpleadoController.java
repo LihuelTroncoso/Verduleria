@@ -25,7 +25,7 @@ public class EmpleadoController {
 
     @PostMapping
     public Empleado insertEmpleado(@RequestBody Empleado empleado) {
-        return empleadosRepo.save(empleado);
+        return service.save(empleado);
     }
 
     @GetMapping("/{id}")
