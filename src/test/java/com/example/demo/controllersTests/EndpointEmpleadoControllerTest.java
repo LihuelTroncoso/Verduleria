@@ -1,8 +1,12 @@
-package com.example.demo;
+package com.example.demo.controllersTests;
 
+import com.example.demo.controllers.EmpleadoController;
 import com.example.demo.controllers.PapaController;
+import com.example.demo.domain.Empleado;
 import com.example.demo.domain.Papa;
+import com.example.demo.repository.EmpleadoRepository;
 import com.example.demo.repository.PapaRepository;
+import com.example.demo.service.EmpleadoService;
 import com.example.demo.service.PapaService;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.hamcrest.Matchers;
@@ -19,35 +23,36 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 
-@WebMvcTest(PapaController.class)
-public class EndpointPapaControllerTest {
+@WebMvcTest(EmpleadoController.class)
+public class EndpointEmpleadoControllerTest {
     @Autowired
     private MockMvc mockMvc;
-    @MockBean
-    private PapaRepository papaRepository;
 
     @MockBean
-    private PapaService papaService;
+    private EmpleadoRepository empleadoRepository;
+
+    @MockBean
+    private EmpleadoService empleadoService;
 
     @Autowired
-    private PapaController papaController;
+    private EmpleadoController empleadoController;
 
 
     @BeforeEach
     void setUp() {
-        RestAssuredMockMvc.standaloneSetup(papaController);
+        RestAssuredMockMvc.standaloneSetup(empleadoController);
     }
 
     @Test
-    void findAllPapasOk() {
-        Papa papa = new Papa();
-        papa.setId(1L);
-        papa.setNombre("testing");
-        papa.setEdad(23);
+    void findAllEmpleadosOk() {
+        Empleado empleado = new Empleado();
+        empleado.setId(1L);
+        empleado.setNombre("testing");
+        empleado.setEdad(23);
 
-        Mockito.when(papaRepository.findAll()).thenReturn(List.of(papa));
+        Mockito.when(empleadoRepository.findAll()).thenReturn(List.of(empleado));
 
-        RestAssuredMockMvc.given().when().get("/papas")
+        RestAssuredMockMvc.given().when().get("/empleados")
                 .then().statusCode(200)
                 .body("$.size()", Matchers.equalTo(1))
                 .body("[0].id", Matchers.equalTo(1))
@@ -56,15 +61,15 @@ public class EndpointPapaControllerTest {
     }
 
     @Test
-    void findPapaByIdOk() {
-        Papa papa = new Papa();
-        papa.setId(1L);
-        papa.setNombre("testing");
-        papa.setEdad(23);
+    void findEmpleadosByIdOk() {
+        Empleado empleado = new Empleado();
+        empleado.setId(1L);
+        empleado.setNombre("testing");
+        empleado.setEdad(23);
 
-        Mockito.when(papaRepository.findById(1L)).thenReturn(Optional.of(papa));
+        Mockito.when(empleadoRepository.findById(1L)).thenReturn(Optional.of(empleado));
 
-        RestAssuredMockMvc.given().when().get("/papas/1")
+        RestAssuredMockMvc.given().when().get("/empleados/1")
                 .then().statusCode(200)
                 .body("id", Matchers.equalTo(1))
                 .body("nombre", Matchers.equalTo("testing"))
@@ -72,8 +77,8 @@ public class EndpointPapaControllerTest {
     }
 
     @Test
-    void findPapaByIdNotFound() {
-        Mockito.when(papaRepository.findById(any(Long.class))).thenReturn(Optional.empty());
+    void findEmpleadosByIdNotFound() {
+        Mockito.when(empleadoRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
         RestAssuredMockMvc.given().when().get("/papas/1")
                 .then().statusCode(404);

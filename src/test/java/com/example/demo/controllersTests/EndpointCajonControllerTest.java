@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controllersTests;
 
 import com.example.demo.controllers.CajonController;
 import com.example.demo.domain.Cajon;
