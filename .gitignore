@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### WEBAPP ###
+dist/
+node_modules/
+./package-lock.json
+.vercel
+curso-platzi-react-avanzado/
