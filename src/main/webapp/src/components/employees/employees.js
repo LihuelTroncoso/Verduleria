@@ -7,7 +7,7 @@ export const Employee = ({photo = DEFAULT_IMAGE, name}) => {
     return (
         <Container>
             <Image src={photo} />
-            <text>{name}</text>
+            {name}
         </Container>
     )
 }
