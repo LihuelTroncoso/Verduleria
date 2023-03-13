@@ -5,6 +5,7 @@ export const Container = styled.div`
     align-items: center;
     justify-content: space beetween;
     background-color: #049b4b;
+    margin-bottom: 10px;
     height: 50px;
     font-family: sans-serif;
 `
